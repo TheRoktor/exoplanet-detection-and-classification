@@ -8,6 +8,9 @@ The original data consisted of **9564 rows**, each one consisting of **48 column
 
 ## 3. Imputation and evaluation
 Before continuing with the prediction models, missing values had to be resolved. Firstly two columns were dropped alltogether; 'koi_teq_err1' and 'koi_teq_err2' as they contained 100% missing values. Secondly, all of the features were ranked according to their Information gain, gain ratio and Gini index. The 'score' attribute proved to be the most important one in the classification of the data points, which was only confirmed by the decision tree 'test'. Therefore the 'score' attribute was selected for a more careful imputation, the remaining missing attributes (accounting for approximately 1% of all missing values) were to be replaced with the mean of that attribute.
+
+![Features ranked by score](data/scores.PNG) 
+
 The data was split into 2 sets, one containing 8054 rows with the score attribute present, and the remaining 1510 with the attribute missing. Two models were chosen for imputation **a linear regression (LR)** one and a **random forest (RF)**. Both were trained and evaluated on the bigger, complete set. The range of all possible score values lies on the [0,1] interval. Both models were evaluated resulting in the following accuracy values.
 
 
@@ -35,6 +38,21 @@ Taking into account the fact, that each row has 48 features, I first had to deci
 ![Plotted data in respect to first 2 principal components](data/PCAplot.PNG) 
 The green dots represent exoplanets that were labelled as 'False Positive', whilst the red and blue respecitevly represent rows, which were either confirmed to be exoplanets or only candidates (not yet confirmed). Even though there is no clean separation, a red-blue cluster appears in the centre of the plot. This suggests that some sort of classification may be possible as there appears to be a difference at least between the false positive cases and our confirmed/candidates. Since PCA, in layman's terms, not only reduces the number of features, it also plots the datapoints in a way, that highlights their similarity, i.e. the closer two points are on the plot, the more similar they are to each other, further reinforcing the idea that classification is possible.
 
+### 4.2 Clustering
+The next step was trying to perform a basic classification alogirthm over our data. The first method that was used was the **k-means** clustering algorithm. It provided the following results.
+![Clustered datapoints](data/clustering.PNG) 
+
+Because I used the same data as before (after undergoing PCA) the scatter plot looks very similar. The only differences are the four colours; each representing one of the four clusters the algorithm found. Because of the big number of plotted datapoints it will be easier to review the findings in a table format.
+
+
+| % of      | Total members | Confirmed | Candidate | False positive | Colour |
+|-----------|---------------|-----------|-----------|----------------|--------|
+| Cluster 1 | 5825          | 38.80%    | 37.36%    | 23.85%         | Blue   |
+| Cluster 2 | 2045          | 0.34%     | 0.0%      | 99.66%         | Red    |
+| Cluster 3 | 1686          | 1.54%     | 4.21%     | 94.25%         | Green  |
+| Cluster 4 | 8             | 0.0%      | 12.5%     | 87.5%          | Orange |
+
+Looking at the table we can quickly see, that the members of the 'False positive' category are the most distinguishable the others; seeing as two clusters consist of approximately 95% of false positive cases. It is also revealed, that the 'Candidate' and 'Confirmed' group are very similar to each other, which would make sense, as the 'Candidate' group is a collection of promising data points, where we have not yet been able to confirm whether or not these actually are planets. Only the 23.85% rate of 'False positive' datapoints in Cluster 1 introduces a bit of uncertainty into our model, as it appears a few 'False positive' datapoints are remarkably similar to our 'Confirmed' or 'Candidate' datapoints.
 ## Exoplanet Classification
 
 ### TODO: GRAPH EVERYTHING, to bo pa treba kar v python..
