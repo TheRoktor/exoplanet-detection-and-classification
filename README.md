@@ -6,6 +6,9 @@ Playing around with the Kepler exoplanet database
 ## 2. The data
 The original data consisted of **9564 rows**, each one consisting of **48 columns**. Out of these 5 attributes were classified as meta attrbutes, as they contained information such as the row ID or the name of the discovered exoplanet. The remaining attributes are measurements taken by the **Kepler Space Telescope**, with the exception of one, that being the **koi_score** attribute. This attribute is calculated from the values of the remaining measurements. This makes the attribute incredibly interesting later on. The original data contained approximately 3.2% of missing or unknown data. The biggest contributor to this was the attribute 'kepler_name' as of course most entries were not classified as exoplanets and therefore named. The other attribute with the prevaling number of missing values was the 'koi_score' attribute. Out of the 9564 rows, 1510 had the 'score' attribute missing (15.7%). 
 
+### 2.1 Correlations
+![Correlation matrix](data/corrs.png) 
+
 ## 3. Imputation and evaluation
 Before continuing with the prediction models, missing values had to be resolved. Firstly two columns were dropped alltogether; 'koi_teq_err1' and 'koi_teq_err2' as they contained 100% missing values. Secondly, all of the features were ranked according to their Information gain, gain ratio and Gini index. The 'score' attribute proved to be the most important one in the classification of the data points, which was only confirmed by the decision tree 'test'. Therefore the 'score' attribute was selected for a more careful imputation, the remaining missing attributes (accounting for approximately 1% of all missing values) were to be replaced with the mean of that attribute.
 
@@ -53,9 +56,33 @@ Because I used the same data as before (after undergoing PCA) the scatter plot l
 | Cluster 4 | 8             | 0.0%      | 12.5%     | 87.5%          | Orange |
 
 Looking at the table we can quickly see, that the members of the 'False positive' category are the most distinguishable the others; seeing as two clusters consist of approximately 95% of false positive cases. It is also revealed, that the 'Candidate' and 'Confirmed' group are very similar to each other, which would make sense, as the 'Candidate' group is a collection of promising data points, where we have not yet been able to confirm whether or not these actually are planets. Only the 23.85% rate of 'False positive' datapoints in Cluster 1 introduces a bit of uncertainty into our model, as it appears a few 'False positive' datapoints are remarkably similar to our 'Confirmed' or 'Candidate' datapoints.
-## Exoplanet Classification
+## 5. Building and evaluating the prediction models
+As before the prediction models chosen are the **Logistic Regression (LR)** and the **Random Forest (RF)**. Both models were evaluated using the data imputed from section 3. Each model was evaluated on the data imputed with the Logistic Regression and Random Forest models. Additionaly the Logistic Regression model was run on the imputed dataset after undergoing **PCA** in order to determine, whether dimensionality reduction would be a viable option, and to determine the negative impacts of smaller variance.
 
-### TODO: GRAPH EVERYTHING, to bo pa treba kar v python..
+![Sample workflow](data/workflow.PNG) 
+
+### 5.1 Logistic Regression
+The data was sampled before being sent into the prediction model. 60% of the data was used as the training dataset, whereas the remaining 40% were used as the testing dataset. L1 (Lasso) regression was once again used, along with the C parameter of 14.
+
+|                 | AUC   | CA    | F1    | Precision | Recall |
+|-----------------|-------|-------|-------|-----------|--------|
+| LR Imputed Data | 0.970 | 0.886 | 0.886 | 0.887     | 0.886  |
+| RF Imputed Data | 0.967 | 0.878 | 0.876 | 0.882     | 0.878  |
+
+### 5.2 Random Forest
+Just as with the Logistic regression before, the same process was used, only substituting the Logistic Regression model with the Random Forest one.
+
+|                 | AUC   | CA    | F1    | Precision | Recall |
+|-----------------|-------|-------|-------|-----------|--------|
+| LR Imputed Data | 0.977 | 0.904 | 0.904 | 0.904     | 0.904  |
+| RF Imputed Data | 0.977 | 0.903 | 0.902 | 0.902     | 0.903  |
+
+
+### 5.3 Principal Component Regression (PCR)
+### TODO
+
+### 5.4 Intepretation
+### Morda še kaj
 
 ## Acknowledgements
 Open source NASA Kepler Space Telescope data acquired at https://www.kaggle.com/nasa/kepler-exoplanet-search-results
