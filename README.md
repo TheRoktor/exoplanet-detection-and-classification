@@ -79,9 +79,20 @@ Just as with the Logistic regression before, the same process was used, only sub
 
 
 ### 5.3 Principal Component Regression (PCR)
-### TODO
+As before, the same data was used. This time, however, the data underwent PCA, after which the 25 first principal components (PCs) were kept, accounting for 93.7% of our original variance, whilst also accounting for only 58% of the original number of features.
+Below is a graph showing the relationship between the number of features and percentage of variance kept (27 PCs represent 95% of the total variance).
+![Variance graph](data/pca.PNG) 
 
-### 5.4 Intepretation
+The following scores were obtained,
+
+
+|                      | AUC   | CA    | F1    | Precision | Recall |
+|----------------------|-------|-------|-------|-----------|--------|
+| Logistic Regression  | 0.975 | 0.900 | 0.899 | 0.901     | 0.900  |
+| Random Forest        | 0.974 | 0.898 | 0.898 | 0.897     | 0.898  |
+
+### 5.4 Evaluation
+Even though the scores listed above can not evaluate how good a model is on their own, they can certainly give us at least an idea. More importantly, we can use them to objectively **compare** our models to determine which one is best. All 3 models came remarkably close to one another, all three separated by approximately 1% (in regards to the values of the scoring parameters, as well as the classification accuracy). We can see that by all metrics, the Logistic Regression scores lower values across the board than the two other models; including the PCR one. All three models used the same data (except for the PCR model, that one used the same data after undergoing PCA) and all models had the exact same parameters. The Random Forest model performed very well, achieving an AUC socre of 0.977, classifying it as an excellent classifier. A CA of 0.904 also indicates a relatively accurate model, correctly predicting more than 90% of it's input data. The most exciting predictor, at least in my opinion, was definetly the Principal Component Regression, as it managed to improve on the Logistic Regression model, whilst, at the same time, using approximately half of the beginning data. Working with a small dataset such as this did not yield any noticable performance (especially memory related) improvements. It does however give us something to think about when working with bigger datasets.
 ### Morda še kaj
 
 ## Acknowledgements
