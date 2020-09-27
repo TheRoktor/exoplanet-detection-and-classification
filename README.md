@@ -2,7 +2,7 @@
 Playing around with the Kepler exoplanet database
 
 ## 1. Plan
-The objective of this small project is to analyise the Kepler Exoplanet Database dataset, in hopes of being able to build a relatively accurate prediction model to aid us in the detection of new possible exoplanet candidates. The raw data will firstly be analyised for any possible multicollinearity issues, ranked in respect to it's importance, then imputed and prepared for the building of prediction models. After this the models will be evaluated and compared.
+The objective of this small project is to analyise the Kepler Exoplanet Database dataset, in hopes of being able to build a relatively accurate prediction model to aid us in the detection of new possible exoplanet candidates. The raw data will firstly be analysed for any possible multicollinearity issues, ranked in respect to it's importance, then imputed and prepared for the building of prediction models. After this the models will be evaluated and compared.
 
 The software used in this project will be the **Orange Data Mining platform**, where all the prediction (and clustering) models will be built and tested. All of the data will be prepared, analysied and plotted using **Python** and its **matplotlib and seaborn** libraries.
 
@@ -31,7 +31,7 @@ After this evaluation, both models were run on the smaller (1510 rows) dataset i
 
 ### 3.1 Correlations
 ![Correlation matrix](data/corrs.png) 
-After computing the correlation matrix from the imputed data, we can see that not many features have strong correlations; most being close to, or exactly zero. Strong correlations are only seen in 'related features' i.e. features measuring uncertainties (_err1 and _err2 features.) These are  1-σ uncertainties, and as such the correlation between these will always be high. Outside of those the small correlations do not suggest any potential multicollinearity problems. Such problems would not necessarily affect the accuracy of the model, but the weights (importances) of certain features. This problem was resolved by using two different methods of ranking. The decision tree was especially useful, as more than one could be constructed ensuring any possible artifacts regarding the previously mentioned feature weights would not cause innacuracies.
+After computing the correlation matrix from the imputed data, we can see that not many features have strong correlations; most being close to, or exactly zero. Strong correlations are only seen in 'related features' i.e. features measuring uncertainties (_err1 and _err2 features.) These are  1-σ uncertainties, and as such the correlation between these will always be high. Outside of those the few correlations, nothing suggests any potential multicollinearity problems. Such problems would not necessarily affect the accuracy of the model, but the weights (importances) of certain features. This problem was resolved by using two different methods of ranking. The decision tree was especially useful, as more than one could be constructed ensuring any possible artifacts regarding the previously mentioned feature weights would not cause innacuracies.
 
 ### 3.2 Linear regression
 The regularization selected was Lasso (L1) regularization, with a small Lambda parameter (1e-4).
