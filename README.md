@@ -4,6 +4,8 @@ Playing around with the Kepler exoplanet database
 ## 1. Plan
 The objective of this small project is to analyise the Kepler Exoplanet Database dataset, in hopes of being able to build a relatively accurate prediction model to aid us in the detection of new possible exoplanet candidates. The raw data will firstly be analyised for any possible multicollinearity issues, ranked in respect to it's importance, then imputed and prepared for the building of prediction models. After this the models will be evaluated and compared.
 
+The software used in this project will be the **Orange Data Mining platform**, where all the prediction (and clustering) models will be built and tested. All of the data will be prepared, analysied and plotted using **Python** and its **matplotlib and seaborn** libraries.
+
 ## 2. The data
 The original data consisted of **9564 rows**, each one consisting of **48 columns**. Out of these 5 attributes were classified as meta attrbutes, as they contained information such as the row ID or the name of the discovered exoplanet. The remaining attributes are measurements taken by the **Kepler Space Telescope**, with the exception of one, that being the **koi_score** attribute. This attribute is calculated from the values of the remaining measurements. This makes the attribute incredibly interesting later on. The original data contained approximately 3.2% of missing or unknown data. The biggest contributor to this was the attribute 'kepler_name' as of course most entries were not classified as exoplanets and therefore not named. The other attribute with the prevaling number of missing values was the 'koi_score' attribute. Out of the 9564 rows, 1510 had the 'score' attribute missing (15.7%). 
 
